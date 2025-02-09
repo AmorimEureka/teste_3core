@@ -53,6 +53,10 @@ O modelo abaixo é a representação lógica do modelo de dados para o processo 
 
 3. ### **Qual a média de número de pedidos por cliente?**
     ```sql
+        --Inicialmente pensei que era a media de pedidos
+        -- POR CADA CLIENTE, porém isso não faria sentido,
+        -- então é a média de pedidos dos clientes:
+                -- TOTAL DE PEDIDOS / TOTAL DE CLIENTES
         WITH PEDIDOS_POR_CLIENTE AS (
             SELECT
                 id_cliente,
