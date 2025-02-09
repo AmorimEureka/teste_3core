@@ -43,16 +43,11 @@ O modelo abaixo é a representação lógica do modelo de dados para o processo 
 2. ### **Quantos pedidos existem com a situação: “pendente entrega”?**
     ```sql
         SELECT
-            DISTINCT p.id_pedido,
-            COUNT(DISTINCT p.id_pedido) AS QTD_PEDIDOS_PENDENTES
+            COUNT(p.id_pedido) AS QTD_PEDIDOS_PENDENTES
         FROM
             pedidos p
         WHERE
-            p.id_situacao_pedido = “pendente entrega”
-        GROUP BY
-            p.id_pedido
-        ORDER BY
-            QTD_PEDIDOS_PENDENTES DESC;
+            p.id_situacao_pedido = 'pendente entrega';
 
 
 
@@ -60,23 +55,17 @@ O modelo abaixo é a representação lógica do modelo de dados para o processo 
     ```sql
         WITH PEDIDOS_POR_CLIENTE AS (
             SELECT
-                p.id_cliente,
-                COUNT(*) AS QDT_PEDIDOS
+                id_cliente,
+                COUNT(*) AS QTD_PEDIDOS
             FROM
-                pedidos p
+                pedidos
             GROUP BY
-                p.id_cliente
+                id_cliente
         )
         SELECT
-            c.nm_cliente,
-            AVG(p.QDT_PEDIDOS) AS MEDIA_PEDIDOS_POR_CLIENTE
+            AVG(QTD_PEDIDOS) AS MEDIA_PEDIDOS_POR_CLIENTE
         FROM
-            PEDIDOS_POR_CLIENTE p
-        LEFT JOIN clientes c ON p.id_cliente = c.id_cliente
-        GROUP BY
-            p.id_cliente
-        ORDER BY
-            AVG(p.QDT_PEDIDOS) DESC;
+            PEDIDOS_POR_CLIENTE;
 
 
 
@@ -96,9 +85,7 @@ O modelo abaixo é a representação lógica do modelo de dados para o processo 
             *
         FROM
             RESPOSTA_ITEM_1
-        GROUP BY
-            1, 2
-        HAVING
+        WHERE
             QTD_ITENS_POR_PEDIDO > 5
         ORDER BY
             QTD_ITENS_POR_PEDIDO ASC;
