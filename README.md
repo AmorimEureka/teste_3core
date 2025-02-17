@@ -112,18 +112,6 @@ O modelo abaixo é a representação lógica do modelo de dados para o processo 
 
         -- A forma como realmente procuro escrever SQL no meu dia a dia,
         -- aplicando SQLFLUFF para garantir o padrão de escrita e facilitar manutensões.
-        SELECT
-            ip.id_item_pedido,
-            SUM(ip.vl_produto) / NULLIF(COUNT(*), 0) AS MEDIA_VALOR_VENDA
-        FROM
-            pedido p
-            LEFT JOIN itens_pedido ip ON p.id_pedido = ip.id_pedido
-        GROUP BY
-            ip.id_item_pedido
-        HAVING
-            SUM(ip.vl_produto) > 0
-        ORDER BY
-            MEDIA_VALOR_VENDA DESC;
 
         WITH VALOR_TOTAL AS (
             SELECT
